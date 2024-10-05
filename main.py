@@ -4,7 +4,7 @@ import os
 import winreg
 import time
 
-#test
+#test2
 
 
 def get_download_path():  #Returns local download folder path.
