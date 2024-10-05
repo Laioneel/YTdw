@@ -28,7 +28,7 @@ def delay():
 
 
 def milochenta(): #Download at 1080p 30fps
-    link3 = input("Tené en cuenta que esta opción SOLO ACEPTA videos a 1080 y 30fps.El tiempo de descarga depende de tu procesador y el largo del video\n\nPoné enter solo para volver atras\nIngresa el link: \n>> ")
+    link3 = input("Remember to only use videos at 1080p 30fps.\n\n Raw input to return\nLink: \n>> ")
     if link3 ==  '':
         os.system("cls")
         opcion()
@@ -38,7 +38,7 @@ def milochenta(): #Download at 1080p 30fps
 
         os.system("cls")
         if video1080 == None:
-            print("El video no tiene opción 1080p 30fps")
+            print("This video does not have 1080p 30fps resolution")
             os.system("pause")
         else:
             videodescargado=video1080.download(output_path=ruta)
@@ -56,7 +56,7 @@ def milochenta(): #Download at 1080p 30fps
     
 
             os.system("cls")
-            print("IMPORTANTE: Si interrumpis este proceso cerrando el programa, se te van a quedar archivos de audio y video temporales en la carpeta de descargas,\nborralos para evitar errores al volver a ejecutar el programa (y por comodidad)\n\n")
+            print("This might take a while depending on your pc.\nWARNING: temporal files might stay in the download's folder if this process interrupts")
 
             # Open the video and audio
             video_clip = VideoFileClip(ruta+"/video TEMP.mp4")
@@ -68,15 +68,14 @@ def milochenta(): #Download at 1080p 30fps
             os.system("cls")
             os.remove(ruta+"/audio TEMP.mp3")
             os.remove(ruta+"/video TEMP.mp4")
-            print("Listo. Podes encontrar el video '",titulo,"' en la carpeta de descargas")
+            print("",titulo," already on download's folder.")
             delay()
             os.system("cls")
             opcion()
 
 
 def audio(): #Audio download
-    # url input from user 
-    audio = input("Poné enter solo para volver atras\nIngresa el link: \n>> ")
+    audio = input("Raw input to go back\nLink: \n>> ")
     if audio == '':
         os.system("cls")
         opcion()
@@ -99,14 +98,14 @@ def audio(): #Audio download
         os.rename(out_file, new_file) 
 
         # result of success 
-        print("Ya tenes en la carpeta de descargas el audio de '",titulo_audio,"'.")
+        print(titulo_audio,"'already on download's folder.")
 
         delay()
         os.system("cls")
         opcion()
 
 def sieteveinte(): #Download videos at 720p 30fps
-    link2 = input("Poné enter solo para volver atras\nIngresa el link: \n>> ") 
+    link2 = input("Raw input to go back.\nLink: \n>> ") 
     if link2 == '':
         os.system("cls")
         opcion()
@@ -119,14 +118,14 @@ def sieteveinte(): #Download videos at 720p 30fps
             titulo_video = titulo_video.replace(i, '')
 
         # result of success 
-        print("Ya tenes en la carpeta de descargas el video",titulo_video,)
+        print(titulo_video, "already on Download's folder.")
         delay()
         os.system("cls")
         opcion()
 
 def PLaudio(): #Download all the audio files from a playlist
 
-    playlist = input("Poné enter solo para volver atras\nIngresa el link: \n>> ")
+    playlist = input("Raw input to go back\nLink: \n>> ")
     if playlist == '':
         os.system("cls")
         opcion()
@@ -140,21 +139,21 @@ def PLaudio(): #Download all the audio files from a playlist
             for i in bad_chars:
                 tit_audPL = tit_audPL.replace(i, '')
             archivo= pl.download(output_path=ruta, filename= tit_audPL+".mp3")
-            print(tit_audPL +" Descargado") 
+            print(tit_audPL +" Downloaded") 
 
-        print("\n\nTodos los audios de la playlist están en la carpeta de Descargas.")
+        print("\n\nAll audio files will be on the Download's folder.")
         delay()
         os.system("cls")
         opcion()
 
 def opcion(): #menu
     
-    opc = str(input("QUÉ QUERES HACER?\n1- Descargar audio\n2- Descargar video en 720p\n3- Descargar video en 1080p30 (Esta tarda bastante)\n0- Salir\n>> "))
+    opc = str(input("1- Download audio\n2- Download 720p video\n3- Download 1080p30 video\n0- Exit\n>> "))
     while opc != "0": 
         if opc == "1" or opc == "2" or opc == "3":  
             if opc == "1":
                 os.system("cls")
-                opc2 = str(input("1- Un solo video\n2- Una playlist\n0- Atrás\n>> "))
+                opc2 = str(input("1- One video\n2- Playlist\n0- Back\n>> "))
                 while opc2 != "0":
                     if opc2 == "1" or opc2 == "2":
                         if opc2 == "1":
@@ -163,7 +162,7 @@ def opcion(): #menu
                                 audio()
                             except:
                                 os.system("cls")
-                                print("Error. Posibilidades:\n\n-El link no es de youtube\n-El link es privado\n-Estas queriendo descargar un archivo que ya existe")
+                                print("Error. Check if:\nIt's a YouTube link\nThe video it's private\nExists a file with the same name in the folder.")
                                 os.system("pause")
                         elif opc2 == "2":
                             try:
@@ -171,11 +170,11 @@ def opcion(): #menu
                                 PLaudio()
                             except:
                                 os.system("cls")
-                                print("Error. Posibilidades:\n\n-El link no es de youtube\n-El link es privado\n-Estas queriendo descargar un archivo que ya existe")
+                                print("Error. Check if:\nIt's a YouTube link\nThe video it's private\nExists a file with the same name in the folder.")
                                 os.system("pause")   
                     else:
                         os.system("cls")
-                        opc2 = str(input("INGRESÁ UN ELEMENTO VÁLIDO\n1- Un solo video\n2- Una playlist\n0- Atrás\n>> "))
+                        opc2 = str(input("Wrong option.\n1- One video\n2- Playlist\n0- Back\n>> "))
                 os.system("cls")
                 opcion()      
             
@@ -186,7 +185,7 @@ def opcion(): #menu
                     sieteveinte()
                 except:
                     os.system("cls")
-                    print("Error. Posibilidades:\n\n-El link no es de youtube\n-El link es privado\n-Estas queriendo descargar un archivo que ya existe")
+                    print("Error. Check if:\nIt's a YouTube link\nThe video it's private\nExists a file with the same name in the folder.")
                     os.system("pause")       
             
             elif opc == "3":
@@ -195,16 +194,16 @@ def opcion(): #menu
                     milochenta()
                 except:
                     os.system("cls")
-                    print("Error. Posibilidades:\n\n-El link no es de youtube\n-El link es privado\n-Estas queriendo descargar un archivo que ya existe")
+                    print("Error. Check if:\nIt's a YouTube link\nThe video it's private\nExists a file with the same name in the folder.")
                     os.system("pause")   
 
         else:
             os.system("cls")
-            opc = str(input("INGRESÁ UN ELEMENTO VÁLIDO\n1- Descargar audio\n2- Descargar video en 720p\n3- Descargar video en 1080p30 (Esta tarda bastante)\n0- Salir\n>> "))
+            opc = str(input("Wrong option\n1- Download audio\n2- Download 720p video\n3- Download 1080p30 video\n0- Exit\n>> "))
     if opc =="0":
         quit()
 
 
 
-#inicio del programa
+#Starup
 opcion()
