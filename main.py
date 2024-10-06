@@ -4,8 +4,6 @@ import os
 import winreg
 import time
 
-#test
-
 def get_download_path():  #Returns local download folder path.
 
     if os.name == 'nt':
