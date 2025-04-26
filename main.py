@@ -1,5 +1,5 @@
-from pytube import YouTube, Playlist
-from moviepy.editor import VideoFileClip, AudioFileClip, concatenate_videoclips
+from pytubefix import YouTube, Playlist
+from moviepy import VideoFileClip, AudioFileClip, concatenate_videoclips
 import os
 import winreg
 import time
