@@ -1,5 +1,4 @@
 from pytubefix import YouTube, Playlist
-from moviepy import  VideoFileClip, AudioFileClip, concatenate_videoclips, CompositeAudioClip
 import ffmpeg
 import os
 import winreg
@@ -23,51 +22,6 @@ def delay():
     time.sleep(3)
 
 
-
-
-def milochenta(): #Download at 1080p 30fps
-    link3 = input("Remember to only use videos at 1080p 30fps.\n\n Raw input to return\nLink: \n>> ")
-    if link3 ==  '':
-        os.system("cls")
-        opcion()
-    else:
-        link3 = YouTube(link3)
-        video1080 = link3.streams.filter(res="1080p")
-        input(print(video1080))
-
-        os.system("cls")
-
-        videodescargado=video1080.get_by_itag(299).download(output_path=ruta, filename= 'video temp.mp4')
-        #os.rename(videodescargado,ruta+"/video TEMP.mp4")
-
-        audio1080 = link3.streams.filter(only_audio=True).first()
-        elaudio=audio1080.download(output_path=ruta, filename='audio temp.m4a')
-        #os.rename(elaudio, ruta+"/audio TEMP.mp3") 
-
-
-        #titulo = str(input("indica el nombre que quieras ponerle al archivo: \n>>"))
-        titulo = video1080.title        
-        for i in bad_chars:
-            titulo = titulo.replace(i, '')
-
-
-        os.system("cls")
-        print("This might take a while depending on your pc.\nWARNING: temporal files might stay in the download's folder if this process interrupts")
-
-        # Open the video and audio
-        video_clip = VideoFileClip(ruta+"/video temp.mp4")
-        audio_clip = AudioFileClip(ruta+"/audio temp.m4a")
-        final_clip = video_clip.set_audio(audio_clip)
-        final_clip.write_videofile('termino.mp4')	
-
-
-        os.system("cls")
-        os.remove(ruta+"/audio temp.m4a")
-        os.remove(ruta+"/video temp.mp4")
-        print("",titulo," already on download's folder.")
-        delay()
-        os.system("cls")
-        opcion()
 
 
 def audio(): #Audio download
@@ -100,38 +54,7 @@ def audio(): #Audio download
         os.system("cls")
         opcion()
 
-def sieteveinte60(): #Download videos at 720p 60fps
-    link2 = input("Raw input to go back.\nLink: \n>> ") 
-    if link2 == '':
-        os.system("cls")
-        opcion()
-    else:
-        link2 = YouTube(link2)
-            
 
-        streamsVid= link2.streams.filter(adaptive= True, res='720p')
-        input(print(streamsVid))
-        streamsAudio= link2.streams.filter(adaptive= True, mime_type="audio/mp4")
-        input(print(streamsAudio))
-
-        video_stream= ffmpeg.input(link2.streams.get_by_itag(298).download(output_path=ruta, filename= 'video temp.mp4'))
-        audio_stream = ffmpeg.input(link2.streams.get_by_itag(140).download(output_path=ruta, filename='audio temp.m4a'))
-        titulo_video= link2.title
-        #video_stream= video720.download()
-        #audio_stream= audio720.download()
-        for i in bad_chars:
-            titulo_video = titulo_video.replace(i, '')
-        output_file= ruta + '/' + titulo_video + '.mp4'
-
-        ffmpeg.output(audio_stream, video_stream,output_file).run()
-        os.system("cls")
-        os.remove(ruta+"/audio temp.m4a")
-        os.remove(ruta+"/video temp.mp4")
-        #result of success 
-        print(titulo_video, "already on Download's folder.")
-        delay()
-        os.system("cls")
-        opcion()
 
 def PLaudio(): #Download all the audio files from a playlist
 
@@ -158,7 +81,7 @@ def PLaudio(): #Download all the audio files from a playlist
 
 def opcion(): #menu
     print(ruta)
-    opc = str(input("1- Download audio\n2- Download 720p60 video\n3- Download 1080p30 video\n0- Exit\n>> "))
+    opc = str(input("DISCLAIMERS:Downloadings will last depending on your CPU. If the YT video is at 60fps, you wont be able to download it at 30, an viceversa.\n1- Download audio\n2- Download 720p video\n3- Download 1080p video\n0- Exit\n>> "))
     while opc != "0": 
         if opc == "1" or opc == "2" or opc == "3":  
             if opc == "1":
@@ -192,7 +115,13 @@ def opcion(): #menu
             elif opc == "2":
                 try:
                     os.system("cls")
-                    sieteveinte60()
+                    opc2=str(input('The video is in\n1- 30fps\n2- 60fps\n>>'))
+                    if opc2 == '1':
+                        os.system("cls")
+                        video_download(136)   
+                    elif opc2 == '2':
+                        os.system("cls")
+                        video_download(298)
                 except:
                     os.system("cls")
                     print("Error. Check if:\nIt's a YouTube link\nThe video it's private\nExists a file with the same name in the folder.")
@@ -202,7 +131,13 @@ def opcion(): #menu
             elif opc == "3":
                 try:
                     os.system("cls")
-                    milochenta()
+                    opc2=str(input('The video is in\n1- 30fps\n2- 60fps\n>>'))
+                    if opc2 == '1':
+                        os.system("cls")
+                        video_download(399)
+                    elif opc2 == '2':
+                        os.system("cls")
+                        video_download(299)
                 except:
                     os.system("cls")
                     print("Error. Check if:\nIt's a YouTube link\nThe video it's private\nExists a file with the same name in the folder.")
@@ -214,6 +149,36 @@ def opcion(): #menu
     if opc =="0":
         quit()
 
+#vidTag: 136: 720p30, 399: 1080p30, 298: 720p60, 299: 1080p60
+
+def video_download(vidTag):
+    yt = input("Raw input to go back.\nLink: \n>> ") 
+    if yt == '':
+        os.system("cls")
+        opcion()
+    else:
+        os.system("cls")
+        yt = YouTube(yt)
+            
+
+        video_stream= ffmpeg.input(yt.streams.get_by_itag(vidTag).download(output_path=ruta, filename= 'video temp.mp4'))
+        audio_stream = ffmpeg.input(yt.streams.get_by_itag(140).download(output_path=ruta, filename='audio temp.m4a'))
+        titulo_video= yt.title
+        #video_stream= video720.download()
+        #audio_stream= audio720.download()
+        for i in bad_chars:
+            titulo_video = titulo_video.replace(i, '')
+        output_file= ruta + '/' + titulo_video + '.mp4'
+
+        ffmpeg.output(audio_stream, video_stream,output_file).run()
+        os.system("cls")
+        os.remove(ruta+"/audio temp.m4a")
+        os.remove(ruta+"/video temp.mp4")
+        #result of success 
+        print(titulo_video, "already on Download's folder.")
+        delay()
+        os.system("cls")
+        opcion()
 
 
 #Starup
